@@ -4,6 +4,7 @@ using BlazorApp1.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorApp1.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240819185636_add_tables")]
+    partial class add_tables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -91,44 +94,6 @@ namespace BlazorApp1.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "cfjd-y67e-4433-gyff-6fg5t-456yt-756jtu7",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "fac9109d-9247-4cda-85f8-7ba9c159dadd",
-                            Email = "admin@localhost.com",
-                            EmailConfirmed = false,
-                            FirstName = "System",
-                            LastName = "Admin",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@LOCALHOST.COM",
-                            NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFPJnO7QBWubZ8St05QBKxboDggQriDKfDJVLcaJJ4qXwty5qMRTzmO1w+5LdPmPLA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "5e425674-48c1-4b66-96a8-8cac43395453",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@localhost.com"
-                        },
-                        new
-                        {
-                            Id = "cfjd-y67e-4433-gyff-6fg5-456yt-756jtu7",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "1299a5c9-599f-4db5-8f08-c7330dd35291",
-                            Email = "user@localhost.com",
-                            EmailConfirmed = false,
-                            FirstName = "System",
-                            LastName = "System",
-                            LockoutEnabled = false,
-                            NormalizedEmail = "USER@LOCALHOST.COM",
-                            NormalizedUserName = "USER@LOCALHOST.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIqDgyO+Ed3kT3Q+P2Q2HCdqZuNIDOHTEmi+d11GjszVDX9SchhZ2w94zlAsNX2DnA==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "92dae1a2-1d1b-4e9b-a382-afe41c5faba8",
-                            TwoFactorEnabled = false,
-                            UserName = "user@localhost.com"
-                        });
                 });
 
             modelBuilder.Entity("BlazorApp1.Domain.Booking", b =>
@@ -158,9 +123,11 @@ namespace BlazorApp1.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("createdBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("updatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -187,37 +154,20 @@ namespace BlazorApp1.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("createdBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("updatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Colours");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DateCreated = new DateTime(2024, 8, 20, 0, 4, 29, 801, DateTimeKind.Local).AddTicks(6206),
-                            DateUpdated = new DateTime(2024, 8, 20, 0, 4, 29, 801, DateTimeKind.Local).AddTicks(6224),
-                            Name = "Black",
-                            createdBy = "System",
-                            updatedBy = "System"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DateCreated = new DateTime(2024, 8, 20, 0, 4, 29, 801, DateTimeKind.Local).AddTicks(6227),
-                            DateUpdated = new DateTime(2024, 8, 20, 0, 4, 29, 801, DateTimeKind.Local).AddTicks(6227),
-                            Name = "Blue",
-                            createdBy = "System",
-                            updatedBy = "System"
-                        });
                 });
 
             modelBuilder.Entity("BlazorApp1.Domain.Customer", b =>
@@ -229,9 +179,11 @@ namespace BlazorApp1.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ContactNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateCreated")
@@ -241,15 +193,19 @@ namespace BlazorApp1.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EmailAddress")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TaxId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("createdBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("updatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -272,37 +228,20 @@ namespace BlazorApp1.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("createdBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("updatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Makes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DateCreated = new DateTime(2024, 8, 20, 0, 4, 29, 801, DateTimeKind.Local).AddTicks(6617),
-                            DateUpdated = new DateTime(2024, 8, 20, 0, 4, 29, 801, DateTimeKind.Local).AddTicks(6618),
-                            Name = "Toyota",
-                            createdBy = "System",
-                            updatedBy = "System"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DateCreated = new DateTime(2024, 8, 20, 0, 4, 29, 801, DateTimeKind.Local).AddTicks(6619),
-                            DateUpdated = new DateTime(2024, 8, 20, 0, 4, 29, 801, DateTimeKind.Local).AddTicks(6620),
-                            Name = "Mercedes-Benz",
-                            createdBy = "System",
-                            updatedBy = "System"
-                        });
                 });
 
             modelBuilder.Entity("BlazorApp1.Domain.Model", b =>
@@ -320,46 +259,12 @@ namespace BlazorApp1.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("createdBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("updatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Models");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            DateCreated = new DateTime(2024, 8, 19, 22, 4, 29, 801, DateTimeKind.Utc).AddTicks(6716),
-                            DateUpdated = new DateTime(2024, 8, 19, 22, 4, 29, 801, DateTimeKind.Utc).AddTicks(6717),
-                            Name = "Vitz",
-                            createdBy = "System",
-                            updatedBy = "System"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            DateCreated = new DateTime(2024, 8, 19, 22, 4, 29, 801, DateTimeKind.Utc).AddTicks(6718),
-                            DateUpdated = new DateTime(2024, 8, 19, 22, 4, 29, 801, DateTimeKind.Utc).AddTicks(6719),
-                            Name = "fit",
-                            createdBy = "System",
-                            updatedBy = "System"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            DateCreated = new DateTime(2024, 8, 19, 22, 4, 29, 801, DateTimeKind.Utc).AddTicks(6725),
-                            DateUpdated = new DateTime(2024, 8, 19, 22, 4, 29, 801, DateTimeKind.Utc).AddTicks(6725),
-                            Name = "Volvo",
-                            createdBy = "System",
-                            updatedBy = "System"
-                        });
                 });
 
             modelBuilder.Entity("BlazorApp1.Domain.Vehicle", b =>
@@ -380,6 +285,7 @@ namespace BlazorApp1.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("LicencePlateNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MakeId")
@@ -392,15 +298,18 @@ namespace BlazorApp1.Migrations
                         .HasColumnType("float");
 
                     b.Property<string>("Vin")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Year")
                         .HasColumnType("int");
 
                     b.Property<string>("createdBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("updatedBy")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -439,20 +348,6 @@ namespace BlazorApp1.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "cfjfd-y676-4433-gyff-6g5t-456yt-756jtu7",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        },
-                        new
-                        {
-                            Id = "cfjfd-y676e-4433-gyff-6fg5t-456yt-756jtu7",
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -540,18 +435,6 @@ namespace BlazorApp1.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "cfjd-y67e-4433-gyff-6fg5-456yt-756jtu7",
-                            RoleId = "cfjfd-y676-4433-gyff-6g5t-456yt-756jtu7"
-                        },
-                        new
-                        {
-                            UserId = "cfjd-y67e-4433-gyff-6fg5t-456yt-756jtu7",
-                            RoleId = "cfjfd-y676e-4433-gyff-6fg5t-456yt-756jtu7"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
