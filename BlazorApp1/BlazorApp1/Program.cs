@@ -1,10 +1,11 @@
-using BlazorApp1.Client.Pages;
-using BlazorApp1.Components;
 using BlazorApp1.Components.Account;
+using BlazorApp1.Components;
 using BlazorApp1.Data;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using BlazorApp1.IRepository;
+using BlazorApp1.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,11 +20,11 @@ builder.Services.AddScoped<AuthenticationStateProvider, PersistingServerAuthenti
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(options =>
-    {
-        options.DefaultScheme = IdentityConstants.ApplicationScheme;
-        options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
-    })
-    .AddIdentityCookies();
+{
+    options.DefaultScheme = IdentityConstants.ApplicationScheme;
+    options.DefaultSignInScheme = IdentityConstants.ExternalScheme;
+})
+.AddIdentityCookies();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -39,6 +40,10 @@ builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSe
 
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 
+// Add services required for controllers
+builder.Services.AddControllers();
+builder.Services.AddTransient<IUnitOfWork,UnitOfWork>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -50,13 +55,15 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
+
+// Ensure controllers are mapped
+app.MapControllers();
+
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
